@@ -11,3 +11,6 @@ Hay dos componentes desarrollados por dos equipos:
 
 ## Step 1
 Los equipos desarrollan en paralelo la solución
+
+## Step 2
+Añadimos PACT
