@@ -14,3 +14,8 @@ Los equipos desarrollan en paralelo la solución
 
 ## Step 2
 Añadimos PACT
+
+## Step 3
+Ampliamos el contrato verificando más "estados":
+- No existe ningún producto
+- Un producto específico no existe
