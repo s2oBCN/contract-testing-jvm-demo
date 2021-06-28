@@ -1,0 +1,5 @@
+
+dependencies {
+    testImplementation("au.com.dius.pact.provider:junit5:4.1.7")
+}
+

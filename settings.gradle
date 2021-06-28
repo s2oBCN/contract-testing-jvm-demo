@@ -1,0 +1,4 @@
+rootProject.name = 'contract-testing-jvm-demo'
+
+include 'consumer'
+include 'provider'
