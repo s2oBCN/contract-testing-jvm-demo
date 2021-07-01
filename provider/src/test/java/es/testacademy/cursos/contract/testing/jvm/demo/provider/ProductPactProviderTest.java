@@ -5,7 +5,7 @@ import au.com.dius.pact.provider.junit5.PactVerificationContext;
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
 import au.com.dius.pact.provider.junitsupport.Provider;
 import au.com.dius.pact.provider.junitsupport.State;
-import au.com.dius.pact.provider.junitsupport.loader.PactFolder;
+import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +21,10 @@ import java.util.Optional;
 import static org.mockito.Mockito.when;
 
 @Provider("ProductService")
-@PactFolder("pacts")
+@PactBroker(
+        host = "localhost",
+        port = "9292"
+)
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ProductPactProviderTest {

@@ -25,3 +25,7 @@ Añadimos Docker -> openjdk:12-alpine
 
 ## Step 5
 Añadimos Docker compose:
+
+## Step 6
+- Añadimos https://github.com/pact-foundation/pact-broker-docker
+- Publicamos en Pact-broker
