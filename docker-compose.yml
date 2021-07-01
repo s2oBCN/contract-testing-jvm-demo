@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  provider:
+    build:
+      context: provider
+    ports:
+      - '8085:8085'
+      - '5005:5005'
+    networks:
+      - 'mynet'
+    command: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar /app.jar
+  consumer:
+    build:
+      context: consumer
+    depends_on:
+      - 'provider'
+    environment:
+      - providerHost=provider
+    networks:
+      - 'mynet'
+    command: ["./wait-for.sh", "provider:8085", "--", "java", "-jar","/app.jar"]
+networks:
+  mynet: {}

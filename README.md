@@ -19,3 +19,9 @@ Añadimos PACT
 Ampliamos el contrato verificando más "estados":
 - No existe ningún producto
 - Un producto específico no existe
+
+## Step 4
+Añadimos Docker -> openjdk:12-alpine
+
+## Step 5
+Añadimos Docker compose:

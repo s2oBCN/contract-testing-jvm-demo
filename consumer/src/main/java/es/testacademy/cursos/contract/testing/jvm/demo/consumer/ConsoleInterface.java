@@ -1,5 +1,6 @@
 package es.testacademy.cursos.contract.testing.jvm.demo.consumer;
 
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,6 @@ import java.util.stream.IntStream;
 
 @Component
 public class ConsoleInterface implements CommandLineRunner {
-
     private final ProductService productService;
     private List<Product> products;
 
@@ -19,17 +19,13 @@ public class ConsoleInterface implements CommandLineRunner {
         this.productService = productService;
     }
 
+    @SneakyThrows
     @Override
     public void run(String... args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             printAllProducts();
-            Integer choice = getUserChoice(scanner);
-            if (choice == null || choice <= 0 || choice > products.size()) {
-                System.out.println("Exiting...");
-                break;
-            }
-            printProduct(choice);
+            Thread.sleep(10000);
         }
     }
 
