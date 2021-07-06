@@ -19,6 +19,6 @@ services:
       - providerHost=provider
     networks:
       - 'mynet'
-    command: ["./wait-for.sh", "provider:8085", "--", "java", "-jar","/app.jar"]
+    command: ["./wait-for.sh", "provider:8085", "-t", "60",  "--", "java", "-jar","/app.jar"]
 networks:
   mynet: {}
