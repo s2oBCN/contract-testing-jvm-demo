@@ -1,5 +1,7 @@
 pipeline {
-    agent jenkins-agent
+    agent {
+        "jenkins-agent"
+    }
     triggers {
         pollSCM '* * * * *'
     }
