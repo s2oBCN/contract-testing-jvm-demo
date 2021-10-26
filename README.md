@@ -10,7 +10,16 @@ Hay dos componentes desarrollados por dos equipos:
 1. Servicio de producto (proveedor). Proporciona información útil sobre los productos, como enumerar todos los productos y obtener los detalles de un producto individual.
 
 ## Step 1
-Los equipos desarrollan en paralelo la solución
+- Los equipos desarrollan en paralelo la solución
 
 ## Step 2
-Añadimos PACT
+- Añadimos PACT
+- getAllProducts
+- getOneProduct
+- getAllProducts_whenProductsExist
+- getProductById_whenProductWithId10Exists
+
+## Step 3
+Ampliamos el contrato verificando más "estados":
+- noProductsExist
+- productDoesNotExist

@@ -82,11 +82,21 @@ public class ProductConsumerPactTest {
         expected.setType("CREDIT_CARD");
         expected.setName("28 Degrees");
 
-        RestTemplate restTemplate = new RestTemplateBuilder()
-                .rootUri(mockServer.getUrl())
-                .build();
+        RestTemplate restTemplate = new RestTemplateBuilder().rootUri(mockServer.getUrl()).build();
         Product product = new ProductService(restTemplate).getProduct("10");
 
         assertEquals(expected, product);
+    }
+
+    @Pact(consumer = "FrontendApplication", provider = "ProductService")
+    RequestResponsePact noProductsExist(PactDslWithProvider builder) {
+        // TODO
+        return null;
+    }
+
+    @Pact(consumer = "FrontendApplication", provider = "ProductService")
+    RequestResponsePact productDoesNotExist(PactDslWithProvider builder) {
+        // TODO
+        return null;
     }
 }
