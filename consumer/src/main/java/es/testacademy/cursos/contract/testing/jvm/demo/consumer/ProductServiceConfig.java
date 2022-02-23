@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 public class ProductServiceConfig {
 
     @Bean
-    RestTemplate productRestTemplate(@Value("${providerHost:kk}") String host, @Value("${provider.port:8085}") int port) {
+    RestTemplate productRestTemplate(@Value("${providerHost:kk}") String host, @Value("${providerPort:666}") int port) {
         return new RestTemplateBuilder().rootUri(String.format("http://%s:%d", host, port)).build();
     }
 }

@@ -16,7 +16,7 @@ services:
     depends_on:
       - 'provider'
     environment:
-      - providerHost=provider
+      - PROVIDER_HOST=provider
     networks:
       - 'mynet'
     command: ["./wait-for.sh", "provider:8085", "-t", "60",  "--", "java", "-jar","/app.jar"]
