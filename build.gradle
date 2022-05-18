@@ -13,6 +13,10 @@ buildscript {
 group = 'es.testacademy.cursos'
 version = '0.0.1-SNAPSHOT'
 
+ext {
+    pactVersion = "4.3.7"
+}
+
 subprojects {
     apply plugin: 'java-library'
     apply plugin: 'io.spring.dependency-management'
@@ -21,11 +25,13 @@ subprojects {
     repositories {
         mavenCentral()
     }
+
     java {
         toolchain {
             languageVersion = JavaLanguageVersion.of(11)
         }
     }
+
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter'
         implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -40,9 +46,6 @@ subprojects {
         testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
     }
 
-    test {
-        useJUnitPlatform()
-    }
 }
 
 

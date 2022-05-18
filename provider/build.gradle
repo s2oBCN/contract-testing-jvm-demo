@@ -1,5 +1,15 @@
 
 dependencies {
-    testImplementation("au.com.dius.pact.provider:junit5:4.1.7")
+    testImplementation("au.com.dius.pact.provider:junit5spring:${pactVersion}")
 }
 
+
+test {
+    testLogging {
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+    systemProperty "pactbroker.host", project.findProperty('pacBrokerServerIP')?: "localhost"
+    systemProperty "pact.verifier.publishResults", project.findProperty('verifyPacts')?: "true"
+    useJUnitPlatform()
+}

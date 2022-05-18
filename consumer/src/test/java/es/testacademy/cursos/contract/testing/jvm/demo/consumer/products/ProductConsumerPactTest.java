@@ -1,9 +1,10 @@
-package es.testacademy.cursos.contract.testing.jvm.demo.consumer;
+package es.testacademy.cursos.contract.testing.jvm.demo.consumer.products;
 
 import au.com.dius.pact.consumer.MockServer;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
 import au.com.dius.pact.consumer.junit5.PactTestFor;
+import au.com.dius.pact.core.model.PactSpecVersion;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 import org.junit.jupiter.api.Test;
@@ -16,16 +17,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static io.pactfoundation.consumer.dsl.LambdaDsl.newJsonArrayMinLike;
-import static io.pactfoundation.consumer.dsl.LambdaDsl.newJsonBody;
+import static au.com.dius.pact.consumer.dsl.LambdaDsl.newJsonArrayMinLike;
+import static au.com.dius.pact.consumer.dsl.LambdaDsl.newJsonBody;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(PactConsumerTestExt.class)
+@PactTestFor(providerName = "ProductService", pactVersion = PactSpecVersion.V3)
 public class ProductConsumerPactTest {
 
-    @Pact(consumer = "FrontendApplication", provider = "ProductService")
-    RequestResponsePact getAllProducts(PactDslWithProvider builder) {
+    @Pact(consumer = "FrontendApplication")
+    public RequestResponsePact getAllProducts(PactDslWithProvider builder) {
         return builder.given("products exist")
                 .uponReceiving("get all products")
                 .method("GET")
@@ -43,8 +45,8 @@ public class ProductConsumerPactTest {
                 .toPact();
     }
 
-    @Pact(consumer = "FrontendApplication", provider = "ProductService")
-    RequestResponsePact getOneProduct(PactDslWithProvider builder) {
+    @Pact(consumer = "FrontendApplication")
+    public RequestResponsePact getOneProduct(PactDslWithProvider builder) {
         return builder.given("product with ID 10 exists")
                 .uponReceiving("get product with ID 10")
                 .method("GET")
@@ -60,8 +62,8 @@ public class ProductConsumerPactTest {
                 .toPact();
     }
 
-    @Pact(consumer = "FrontendApplication", provider = "ProductService")
-    RequestResponsePact noProductsExist(PactDslWithProvider builder) {
+    @Pact(consumer = "FrontendApplication")
+    public RequestResponsePact noProductsExist(PactDslWithProvider builder) {
         return builder.given("no products exist")
                 .uponReceiving("get all products")
                 .method("GET")
@@ -73,8 +75,8 @@ public class ProductConsumerPactTest {
                 .toPact();
     }
 
-    @Pact(consumer = "FrontendApplication", provider = "ProductService")
-    RequestResponsePact productDoesNotExist(PactDslWithProvider builder) {
+    @Pact(consumer = "FrontendApplication")
+    public RequestResponsePact productDoesNotExist(PactDslWithProvider builder) {
         return builder.given("product with ID 11 does not exist")
                 .uponReceiving("get product with ID 11")
                 .method("GET")
@@ -92,10 +94,8 @@ public class ProductConsumerPactTest {
         product.setType("CREDIT_CARD");
         product.setName("Gem Visa");
         List<Product> expected = List.of(product, product);
-
         RestTemplate restTemplate = new RestTemplateBuilder().rootUri(mockServer.getUrl()).build();
         List<Product> products = new ProductService(restTemplate).getAllProducts();
-
         assertEquals(expected, products);
     }
 
@@ -106,10 +106,8 @@ public class ProductConsumerPactTest {
         expected.setId("10");
         expected.setType("CREDIT_CARD");
         expected.setName("28 Degrees");
-
         RestTemplate restTemplate = new RestTemplateBuilder().rootUri(mockServer.getUrl()).build();
         Product product = new ProductService(restTemplate).getProduct("10");
-
         assertEquals(expected, product);
     }
 
@@ -118,7 +116,6 @@ public class ProductConsumerPactTest {
     void getAllProducts_whenNoProductsExist(MockServer mockServer) {
         RestTemplate restTemplate = new RestTemplateBuilder().rootUri(mockServer.getUrl()).build();
         List<Product> products = new ProductService(restTemplate).getAllProducts();
-
         assertEquals(Collections.emptyList(), products);
     }
 
@@ -126,7 +123,6 @@ public class ProductConsumerPactTest {
     @PactTestFor(pactMethod = "productDoesNotExist")
     void getProductById_whenProductWithId11DoesNotExist(MockServer mockServer) {
         RestTemplate restTemplate = new RestTemplateBuilder().rootUri(mockServer.getUrl()).build();
-
         HttpClientErrorException e = assertThrows(HttpClientErrorException.class,
                 () -> new ProductService(restTemplate).getProduct("11"));
         assertEquals(404, e.getRawStatusCode());

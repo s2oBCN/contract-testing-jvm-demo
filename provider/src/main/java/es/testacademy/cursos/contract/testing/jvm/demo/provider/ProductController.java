@@ -27,7 +27,6 @@ public class ProductController {
     @GetMapping("products/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") String id) {
         Optional<Product> product = productRepository.getById(id);
-
         return ResponseEntity.of(product);
     }
 }

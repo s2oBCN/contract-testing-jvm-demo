@@ -1,4 +1,4 @@
-package es.testacademy.cursos.contract.testing.jvm.demo.consumer;
+package es.testacademy.cursos.contract.testing.jvm.demo.consumer.products;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;

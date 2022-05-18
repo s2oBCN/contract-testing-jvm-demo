@@ -1,4 +1,4 @@
-package es.testacademy.cursos.contract.testing.jvm.demo.consumer;
+package es.testacademy.cursos.contract.testing.jvm.demo.consumer.products;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.junit.jupiter.api.AfterEach;

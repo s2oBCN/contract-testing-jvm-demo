@@ -1,4 +1,4 @@
-package es.testacademy.cursos.contract.testing.jvm.demo.consumer;
+package es.testacademy.cursos.contract.testing.jvm.demo.consumer.products;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

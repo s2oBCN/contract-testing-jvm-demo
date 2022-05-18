@@ -5,7 +5,11 @@ import au.com.dius.pact.provider.junit5.PactVerificationContext;
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
 import au.com.dius.pact.provider.junitsupport.Provider;
 import au.com.dius.pact.provider.junitsupport.State;
+import au.com.dius.pact.provider.junitsupport.VerificationReports;
 import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
+import au.com.dius.pact.provider.junitsupport.loader.VersionSelector;
+import es.testacademy.cursos.contract.testing.jvm.demo.users.User;
+import es.testacademy.cursos.contract.testing.jvm.demo.users.UsersRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,17 +24,18 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
-@Provider("ProductService")
-@PactBroker
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ProductPactProviderTest {
+@PactBroker
+@Provider("UserService")
+@VerificationReports(value = {"console", "markdown"}, reportDir = "build/pacts")
+public class UserPactProviderTest {
 
     @LocalServerPort
     int port;
 
     @MockBean
-    private ProductRepository productRepository;
+    private UsersRepository userRepository;
 
     @BeforeEach
     void setUp(PactVerificationContext context) {
@@ -43,23 +48,23 @@ public class ProductPactProviderTest {
         context.verifyInteraction();
     }
 
-    @State("products exist")
-    void toProductsExistState() {
-        when(productRepository.fetchAll()).thenReturn(
-                List.of(new Product("09", "CREDIT_CARD", "Gem Visa", "v1"),
-                        new Product("10", "CREDIT_CARD", "28 Degrees", "v1")));
+    @State("users exist")
+    void toUsersExistState() {
+        when(userRepository.fetchAll()).thenReturn(
+                List.of(new User("fc763eba-0905-41c5-a27f-3934ab26786c", "UserA", "127.0.0.1", false),
+                        new User("fc763eba-0905-41c5-a27f-3934ab26786c", "UserB", "127.0.0.1", false)));
     }
 
-    @State("product with ID 10 exists")
-    void toProductWithIdTenExistsState() {
-        when(productRepository.getById("10")).thenReturn(Optional.of(new Product("10", "CREDIT_CARD", "28 Degrees", "v1")));
+    @State("user with ID UserA exists")
+    void toUserWithIdTenExistsState() {
+        when(userRepository.getByName("UserA")).thenReturn(Optional.of(new User("4c763eba-0905-41c5-a27f-3934ab26786c", "UserA", "127.0.0.1", false)));
     }
 
     @State({
-            "no products exist",
-            "product with ID 11 does not exist"
+            "no users exist",
+            "user with ID 11 does not exist"
     })
-    void toNoProductsExistState() {
-        when(productRepository.fetchAll()).thenReturn(Collections.emptyList());
+    void toNoUsersExistState() {
+        when(userRepository.fetchAll()).thenReturn(Collections.emptyList());
     }
 }

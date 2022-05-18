@@ -3,27 +3,36 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath 'au.com.dius.pact.provider:gradle:4.1.7'
+		classpath "au.com.dius.pact.provider:gradle:4.1.0"
 	}
 }
+apply plugin: "au.com.dius.pact"
 
-plugins {
-	id 'au.com.dius.pact' version '4.1.6'
-}
+version = '0.0.1-SNAPSHOT'
 
 dependencies {
 	testImplementation 'com.github.tomakehurst:wiremock:2.27.2'
-	testImplementation 'au.com.dius.pact.consumer:java8:4.1.7'
-	testImplementation 'au.com.dius.pact.consumer:junit5:4.1.7'
+	testImplementation "au.com.dius.pact.consumer:junit5:${pactVersion}"
 }
+
 
 bootRun{
 	standardInput = System.in
 }
 
-task copyPacts(type: Copy) {
-	description 'Copies the generated Pact json file to the provider resources directory'
+test {
+	testLogging {
+		showStandardStreams = true
+		exceptionFormat = 'full'
+	}
+	useJUnitPlatform()
+}
 
-	from('build/pacts/')
-	into('../provider/src/test/resources/pacts/')
+pact {
+	publish {
+		String pacBrokerServerIP =   project.findProperty('pacBrokerServerIP') ?: "localhost"
+		pactBrokerUrl = "http://${pacBrokerServerIP}"
+		// pactBrokerUsername = 'username'
+		// pactBrokerPassword = 'password'
+	}
 }

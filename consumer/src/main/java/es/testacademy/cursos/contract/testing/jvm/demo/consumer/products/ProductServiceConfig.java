@@ -1,4 +1,4 @@
-package es.testacademy.cursos.contract.testing.jvm.demo.consumer;
+package es.testacademy.cursos.contract.testing.jvm.demo.consumer.products;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -13,4 +13,5 @@ public class ProductServiceConfig {
     RestTemplate productRestTemplate(@Value("${provider.port:8085}") int port) {
         return new RestTemplateBuilder().rootUri(String.format("http://localhost:%d", port)).build();
     }
+
 }

@@ -1,0 +1,24 @@
+pipeline {
+    agent {
+        label "jenkins-agent"
+    }
+    options {
+        ansiColor('xterm')
+    }
+    parameters {
+        string(name: 'pacBrokerServerIP', defaultValue: 'localhost', description: "PACT BROKER IP")
+
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh './gradlew assemble'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './gradlew  -PpacBrokerServerIP=${params.pacBrokerServerIP} -PverifyPacts=true test'
+            }
+        }
+    }
+}

@@ -1,4 +1,4 @@
-package es.testacademy.cursos.contract.testing.jvm.demo.provider;
+package es.testacademy.cursos.contract.testing.jvm.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
