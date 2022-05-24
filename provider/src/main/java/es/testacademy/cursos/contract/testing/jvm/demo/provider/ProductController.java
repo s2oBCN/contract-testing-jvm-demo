@@ -24,7 +24,7 @@ public class ProductController {
         return productRepository.fetchAll();
     }
 
-    @GetMapping("products/{id}")
+    @GetMapping("product/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") String id) {
         Optional<Product> product = productRepository.getById(id);
 
